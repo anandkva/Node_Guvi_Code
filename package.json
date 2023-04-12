@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "name": "node_guvi_code",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PoonamChauhan229/Node_Guvi_Code.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PoonamChauhan229/Node_Guvi_Code/issues"
+  },
+  "homepage": "https://github.com/PoonamChauhan229/Node_Guvi_Code#readme",
+  "description": ""
+}

@@ -1,0 +1,21 @@
+QN34873 - downloading zip file but error diaply
+Student Name:
+DINESH KUMAR S
+Batch:
+M3 - WE
+Email:
+dinesh_k@outlook.in
+Mobile:
++919786363710
+Created at:
+12/04/2023, 12:25 PM
+Assigned to:
+Not Assigned
+Description:
+using request library to download the file,after down load error display as no file
+ hey
+ hey
+ hey
+ hey
+ hey
+ hey
