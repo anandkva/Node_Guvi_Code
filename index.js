@@ -98,7 +98,11 @@ app.get('/', function (req, res) {
 })
 
 app.get('/movies', async function(req,res){
-    const allMovies= await client.db('guvi-node-db').collection('movies').find({}).toArray()
+    console.log(req.query)
+    if(req.query.rating){
+        req.query.rating= +req.query.rating
+    }
+    const allMovies= await client.db('guvi-node-db').collection('movies').find(req.query).toArray()
     res.send(allMovies)
 })
 
@@ -123,6 +127,30 @@ app.post('/movies',async function(req,res){
 })
 
 
+// delete
+app.delete('/movies/:id', async function(req,res){
+    console.log(req.params)
+    const {id}=req.params
+
+    // const movie=movies.filter((element,index)=>element.id===id)
+    //const movie=movies.find((element)=>element.id===id)
+    const Deletemovie= await client.db('guvi-node-db').collection('movies').deleteOne({id:id})
+    console.log(Deletemovie)
+    Deletemovie.deletedCount>0?res.send({Deletemovie,msg:"Movie deleted Successfully"}):res.status(404).send({msg:"Movie Not found"})
+})
+
+// update
+app.put('/movies/:id', async function(req,res){
+    console.log(req.params)
+    const data=req.body
+    const {id}=req.params
+
+    // const movie=movies.filter((element,index)=>element.id===id)
+    //const movie=movies.find((element)=>element.id===id)
+    const Updatemovie= await client.db('guvi-node-db').collection('movies').updateOne({id:id},{$set:data})
+    console.log(Updatemovie)
+    Updatemovie.matchedCount>0?res.send({Updatemovie,msg:"Movie Updated Succesfully"}):res.status(404).send({msg:"Movie Not found"})
+})
 app.listen(PORT,()=>{
     console.log(PORT, "App started")
 })
