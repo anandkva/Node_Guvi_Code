@@ -1,4 +1,12 @@
-const express = require('express')
+// const express = require('express');
+// const { MongoClient } = require('mongodb');
+
+import express from 'express';
+import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv'
+dotenv.config();
+
+console.log(process.env.MONGO_URL)
 const app = express()
 
 const PORT=4000;
@@ -69,22 +77,51 @@ const movies=[
     }
    ]
 
+app.use(express.json()) 
+
+
+//const MONGO_URL='mongodb://localhost'
+
+const MONGO_URL=process.env.MONGO_URL
+
+async function createConnection(){
+    const client =new MongoClient(MONGO_URL)
+    await client.connect();
+    console.log("Mongo is connected")
+    return client;
+}
+
+const client =await createConnection()
+
 app.get('/', function (req, res) {
   res.send('Hello World🌎🌍🌏')
 })
 
-app.get('/movies',function(req,res){
-    res.send(movies)
+app.get('/movies', async function(req,res){
+    const allMovies= await client.db('guvi-node-db').collection('movies').find({}).toArray()
+    res.send(allMovies)
 })
 
-app.get('/movies/:id',function(req,res){
+
+app.get('/movies/:id', async function(req,res){
     console.log(req.params)
     const {id}=req.params
 
     // const movie=movies.filter((element,index)=>element.id===id)
-    const movie=movies.find((element)=>element.id===id)
-    movie?res.send(movie):res.send({msg:"Movie Not found"})
+    //const movie=movies.find((element)=>element.id===id)
+    const movie= await client.db('guvi-node-db').collection('movies').findOne({id:id})
+    movie?res.send(movie):res.status(404).send({msg:"Movie Not found"})
 })
+
+// middleware=>json
+app.post('/movies',async function(req,res){
+    const data=req.body
+    console.log(data)
+    const result=await client.db('guvi-node-db').collection('movies').insertMany(data);
+
+    res.send(result)
+})
+
 
 app.listen(PORT,()=>{
     console.log(PORT, "App started")
