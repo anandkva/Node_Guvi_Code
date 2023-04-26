@@ -1,16 +1,10 @@
 {
     "version": 2,
+    "name": "node-guvi-app",
     "builds": [
-      {
-        "src": "index.js",
-        "use": "@now/node"
-      }
+       { "src": "index.js", "use": "@vercel/node" }
     ],
     "routes": [
-      {
-      
-        "src": "/(.*)",
-        "dest": "index.js"
-      }
+       { "src": "/(.*)", "dest": "/index.js" }
     ]
-  }
+ }
